@@ -1,22 +1,22 @@
-import { createRow, createEmbed, brBuilder } from '@magicyan/discord';
-import {SelectMenuBuilder} from "discord.js"
+import { ActionRowBuilder, EmbedBuilder, SelectMenuBuilder } from 'discord.js';
 
 export function inventoryModel() {
   return {
     embeds: [
-      createEmbed({
-        description: brBuilder(
-	"",
-	),
-      }),
+      new EmbedBuilder({
+        description: "",
+	}),
     ],
     components: [
-     createRow(
-	new SelectMenuBuilder({
-	
-	})
-      )
-    ]
+      new ActionRowBuilder({
+        components: [
+          new SelectMenuBuilder({
+            customId: 'select/inventory/${interaction.user.id}',
+            options: [],
+          }),
+        ],
+      }),
+    ],
   };
 }
 
