@@ -10,7 +10,8 @@ import { createRow, createEmbed, brBuilder } from "@magicyan/discord";
 
 type InventoryModel = {
   name: string;
-  placeholder: string;
+  description: string,
+  icon: string
 };
 
 export function inventoryModel(interaction: Interaction) {
@@ -22,7 +23,10 @@ export function inventoryModel(interaction: Interaction) {
   });
 
   const rowOptions: InventoryModel[] = [
-    { name: "Model 1", placeholder: "simple and clean model" },
+    {   name: "Model 1", 
+	description: "simple and clean model", 
+	icon: ""
+    },
   ];
 
   const menu = new StringSelectMenuBuilder()
@@ -31,7 +35,7 @@ export function inventoryModel(interaction: Interaction) {
     .addOptions(
       rowOptions.map<APISelectMenuOption>((opt) => ({
         label: opt.name,
-        description: opt.placeholder,
+	description: opt.description,
         value: opt.name.toLowerCase(),
       }))
     );
