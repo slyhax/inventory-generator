@@ -1,26 +1,46 @@
-import { ButtonBuilder, ButtonStyle } from 'discord.js';
-import { createRow, createEmbed, brBuilder } from "@magicyan/discord"
+import {
+  StringSelectMenuBuilder,
+  ActionRowBuilder,
+  StringSelectMenuOptionBuilder,
+  ComponentType,
+  APISelectMenuOption,
+  Interaction,
+} from "discord.js";
+import { createRow, createEmbed, brBuilder } from "@magicyan/discord";
 
+type InventoryModel = {
+  name: string;
+  placeholder: string;
+};
 
-export function inventoryModel() {
-  var embed = createEmbed({
-   description: brBuilder(
-   ),
-   color: "Default"
-  }
-)
+export function inventoryModel(interaction: Interaction) {
+  if (!interaction.isChatInputCommand() && !interaction.isButton() && !interaction.isStringSelectMenu()) return;
 
-var row = createRow(
+  const embed = createEmbed({
+    description: brBuilder(),
+    color: "Default",
+  });
 
-new ButtonBuilder({
-})
+  const rowOptions: InventoryModel[] = [
+    { name: "Model 1", placeholder: "simple and clean model" },
+  ];
 
-)
+  const menu = new StringSelectMenuBuilder()
+    .setCustomId(`menu/inventory/${interaction.user.id}`)
+    .setPlaceholder("->")
+    .addOptions(
+      rowOptions.map<APISelectMenuOption>((opt) => ({
+        label: opt.name,
+        description: opt.placeholder,
+        value: opt.name.toLowerCase(),
+      }))
+    );
 
+  const row = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(menu);
 
-return {
+  return {
     embeds: [embed],
-    components: [],
+    components: [row],
   };
 }
 
