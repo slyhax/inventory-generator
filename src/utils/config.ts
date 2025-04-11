@@ -1,5 +1,7 @@
 import 'dotenv/config' 
 
 export const config = () => {
-    token: process.env.TOKEN
+   return {
+	token: process.env.TOKEN
+   }
 }
